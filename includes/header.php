@@ -1,7 +1,9 @@
 <?php
-session_start();
+// Session nur starten, wenn sie nicht schon läuft
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
