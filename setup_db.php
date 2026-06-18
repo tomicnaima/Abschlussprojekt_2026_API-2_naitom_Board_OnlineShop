@@ -63,5 +63,5 @@ $db->exec("
     );
 ");
 
-echo "Super! Alle 5 Tabellen wurden erfolgreich in 'database.sqlite' erstellt.";
+echo "Alle 5 Tabellen wurden erfolgreich in 'database.sqlite' erstellt.";
 ?>
