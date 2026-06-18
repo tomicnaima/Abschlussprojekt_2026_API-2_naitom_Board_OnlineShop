@@ -1,16 +1,11 @@
 <?php
-// 1. Verbindung zur SQLite-Datenbankdatei herstellen
-// Wenn die Datei existiert, wird sie geöffnet. Falls nicht, wird sie erstellt.
+// Verbindung zur SQLite-Datenbankdatei herstellen
 $db = new PDO('sqlite:database.sqlite');
-
-// Fehlermeldungen einschalten, damit wir sehen, wenn etwas schiefgeht
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 echo "Starte Datenbank-Setup...<br>";
 
-// 2. SQL-Befehle für deine 5 Tabellen ausführen
 $db->exec("
-    -- Tabelle für Benutzer
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT NOT NULL UNIQUE,
@@ -20,7 +15,6 @@ $db->exec("
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    -- Tabelle für Produkte
     CREATE TABLE IF NOT EXISTS products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
@@ -31,7 +25,6 @@ $db->exec("
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    -- Tabelle für den Warenkorb
     CREATE TABLE IF NOT EXISTS cart_items (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
@@ -41,7 +34,6 @@ $db->exec("
         FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
     );
 
-    -- Tabelle für Bestellungen
     CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
@@ -51,7 +43,6 @@ $db->exec("
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     );
 
-    -- Tabelle für die Bestell-Positionen
     CREATE TABLE IF NOT EXISTS order_items (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         order_id INTEGER NOT NULL,
@@ -63,5 +54,57 @@ $db->exec("
     );
 ");
 
-echo "Alle 5 Tabellen wurden erfolgreich in 'database.sqlite' erstellt.";
+echo "Alle 5 Tabellen wurden erfolgreich überprüft/erstellt.<br>";
+
+// OPTIONAL: Löscht alte Testprodukte mit Unsplash-Verlinkung, damit wir die neuen lokalen Pfade erzwingen
+$db->exec("DELETE FROM products");
+
+// Test-Produkte einfügen, falls die Tabelle leer ist (oder wir sie gerade geleert haben)
+$stmt = $db->query("SELECT COUNT(*) FROM products");
+$productCount = $stmt->fetchColumn();
+
+if ($productCount == 0) {
+    echo "Füge Test-Produkte mit lokalen Bildpfaden hinzu...<br>";
+    
+    $insertProducts = [
+        [
+            'name' => 'Retro Sneaker',
+            'description' => 'Klassischer Sneaker im 90er Look. Extrem bequem und stylisch.',
+            'price' => 129.99,
+            'color' => 'Weiss/Pink',
+            'image_url' => 'images/sneaker.jpg'
+        ],
+        [
+            'name' => 'Streetwear Hoodie',
+            'description' => 'Oversized Hoodie aus 100% Bio-Baumwolle. Hält perfekt warm.',
+            'price' => 79.95,
+            'color' => 'Schwarz/Grün',
+            'image_url' => 'images/hoodie.jpg'
+        ],
+        [
+            'name' => 'Urban Cap',
+            'description' => 'Verstellbare Basecap im minimalistischen Design.',
+            'price' => 24.99,
+            'color' => 'Dunkelblau',
+            'image_url' => 'images/cap.jpg'
+        ]
+    ];
+
+    $insertStmt = $db->prepare("INSERT INTO products (name, description, price, color, image_url) VALUES (:name, :description, :price, :color, :image_url)");
+    
+    foreach ($insertProducts as $p) {
+        $insertStmt->execute([
+            ':name' => $p['name'],
+            ':description' => $p['description'],
+            ':price' => $p['price'],
+            ':color' => $p['color'],
+            ':image_url' => $p['image_url']
+        ]);
+    }
+    echo "3 Test-Produkte erfolgreich mit den lokalen Bildpfaden eingefügt!<br>";
+} else {
+    echo "Produkte existieren bereits, überspringe Einfügen.<br>";
+}
+
+echo "<strong>Setup abgeschlossen!</strong>";
 ?>
