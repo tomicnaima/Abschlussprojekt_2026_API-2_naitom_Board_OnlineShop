@@ -8,7 +8,7 @@
 
 - Issue #15 (Warenkorb-Löschfunktion) hinzugefügt: Ich habe die Datei remove_from_cart.php entwickelt und die cart.php um rote Löschen-Buttons erweitert. Nutzer können Artikel nun per Klick sicher und direkt aus ihrer Session/Datenbank entfernen.
 
-- Issue #16 & #17 (Checkout & Bestellabwicklung) vollendet: Ich habe die Kasse (checkout.php) mit einem Formular für die Lieferadresse aufgesetzt. Beim Abschicken verarbeitet die place_order.php den Kauf über eine sichere Datenbank-Transaktion: Sie erstellt eine Order in orders, kopiert die Artikel in order_items, leert den Warenkorb und gibt eine Erfolgsmeldung mit der Bestellnummer aus.
+- Issue #10, #12 (Warenkorb & Checkout) fertig: Ich habe die Kasse (checkout.php) mit einem Formular für die Lieferadresse aufgesetzt. Beim Abschicken verarbeitet die place_order.php den Kauf über eine sichere Datenbank-Transaktion: Sie erstellt eine Order in orders, kopiert die Artikel in order_items, leert den Warenkorb und gibt eine Erfolgsmeldung mit der Bestellnummer aus.
 
 ## Was gut lief:
 Die gesamte Warenkorb und Bestell-Logik lief. Die Weiterleitungen zwischen Detailseite, Warenkorb und Kasse greifen perfekt ineinander und die mathematischen Berechnungen der Preise in PHP stimmen auf den Cent genau.
