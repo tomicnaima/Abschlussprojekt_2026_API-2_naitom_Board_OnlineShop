@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.1
+ * Description: Authentifizierungsprüfung für den Webshop. Stellt sicher, dass nur autorisierte Benutzer auf bestimmte Seiten zugreifen können.
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
