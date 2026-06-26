@@ -1,4 +1,17 @@
 <?php
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.3
+ * Description: Skript zum Platzieren einer Bestellung. Es verarbeitet die Bestellung 
+ * und speichert die Bestelldaten mit korrekter Schweizer Zeit in der Datenbank.
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
+// 1. Schweizer Zeitzone (MIT K.I)
+date_default_timezone_set('Europe/Zurich');
+
 session_start();
 
 // Sicherheitsschloss: Nur für eingeloggte User
@@ -41,12 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $totalPrice += $item['price'] * $item['quantity'];
         }
 
+        // 2. Aktuelle Schweizer Zeit generieren
+        $aktuelleZeit = date('Y-m-d H:i:s');
+
         // Datenbank-Transaktion starten (Sicherheit: Entweder alles klappt oder nichts!)
         $db->beginTransaction();
 
-        // In die Tabelle orders eintragen
-        $insertOrderStmt = $db->prepare("INSERT INTO orders (user_id, total_price, status) VALUES (?, ?, 'pending')");
-        $insertOrderStmt->execute([$userId, $totalPrice]);
+        // 3. In die Tabelle orders eintragen (JETZT MIT created_at!)
+        $insertOrderStmt = $db->prepare("INSERT INTO orders (user_id, total_price, status, created_at) VALUES (?, ?, 'pending', ?)");
+        $insertOrderStmt->execute([$userId, $totalPrice, $aktuelleZeit]);
         
         // Die gerade generierte Order-ID holen
         $orderId = $db->lastInsertId();
