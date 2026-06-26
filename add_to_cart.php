@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.2
+ * Description: Funktion zum Hinzufügen von Produkten zum Warenkorb
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
 session_start();
 
 // Prüfen ob der Benutzer eingeloggt ist
