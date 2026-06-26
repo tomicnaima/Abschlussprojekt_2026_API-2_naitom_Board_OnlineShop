@@ -1,4 +1,13 @@
 <?php 
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.2
+ * Description: Registrierungsseite für neue Benutzer. Ermöglicht die Erstellung eines Kontos mit Benutzername, E-Mail und Passwort.
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
 session_start(); 
 include 'includes/header.php'; 
 
