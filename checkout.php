@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.2
+ * Description: Kunden-Bestellübersicht in CHF mit tabellarischer Auflistung.
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
 session_start();
 include 'includes/header.php';
 
@@ -77,13 +86,14 @@ try {
                 ?>
                     <li style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
                         <span><?php echo $item['quantity']; ?>x <?php echo htmlspecialchars($item['name']); ?></span>
-                        <span style="font-weight: bold;"><?php echo number_format($itemTotal, 2, ',', '.'); ?> €</span>
+                        <!-- HIER AUF CHF GEÄNDERT -->
+                        <span style="font-weight: bold;">CHF <?php echo number_format($itemTotal, 2, '.', '\''); ?></span>
                     </li>
                 <?php endforeach; ?>
             </ul>
             <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-top: 15px; border-top: 2px solid #333; font-size: 1.3rem; font-weight: bold;">
                 <span>Gesamtsumme:</span>
-                <span style="color: #e74c3c;"><?php echo number_format($totalPrice, 2, ',', '.'); ?> €</span>
+                <span style="color: #e74c3c;">CHF <?php echo number_format($totalPrice, 2, '.', '\''); ?></span>
             </div>
         </div>
 
