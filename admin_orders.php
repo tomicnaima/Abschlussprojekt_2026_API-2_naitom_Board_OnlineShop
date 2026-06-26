@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.2
+ * Description: Admin-Seite zur Ansicht aller Bestellungen
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
 session_start();
 include 'includes/header.php';
 
@@ -53,7 +62,7 @@ try {
                             <td style="font-weight: bold;">#<?php echo $order['order_id']; ?></td>
                             <td><?php echo htmlspecialchars($order['username']); ?></td>
                             <td><?php echo $order['created_at']; ?></td>
-                            <td style="font-weight: bold; color: #e74c3c;"><?php echo number_format($order['total_price'], 2, ',', '.'); ?> €</td>
+                            <td style="font-weight: bold; color: #e74c3c;">CHF <?php echo number_format($order['total_price'], 2, '.', '\''); ?></td>
                             <td>
                                 <span style="background: #ffeaa7; color: #d63031; padding: 5px 10px; border-radius: 4px; font-size: 0.9rem; font-weight: bold;">
                                     <?php echo htmlspecialchars($order['status']); ?>
