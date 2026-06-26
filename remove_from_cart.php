@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.2
+ * Description: Skript zum Entfernen von Produkten aus dem Warenkorb.
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
 session_start();
 
 // Prüft ob der Nutzer eingeloggt ist
