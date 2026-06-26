@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.2
+ * Description: Kunden-Bestellübersicht in CHF mit tabellarischer Auflistung.
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
 // Session starten, um Zugriff darauf zu haben
 session_start();
 
