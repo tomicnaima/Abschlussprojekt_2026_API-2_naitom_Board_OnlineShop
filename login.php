@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Author: Naima Tomic
+ * Date: 2026-06-25
+ * Version: 1.2
+ * Description: Kunden-Bestellübersicht in CHF mit tabellarischer Auflistung.
+ * Project: Individuelles Abschlussprojekt BLJ - OnlineShop
+ */
+
 // Session starten, damit der Server sich merkt, wer eingeloggt ist
 session_start();
 
@@ -31,8 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 // Wichtige Daten in der Session speichern
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['name'];
-                $_SESSION['user_role'] = $user['role']; // Damit wir wissen, ob es ein Admin oder Kunde ist
+                
+                // Falls deine Spalte in der Datenbank 'username' heisst, nutzen wir das, sonst 'name'
+                $_SESSION['user_name'] = isset($user['username']) ? $user['username'] : (isset($user['name']) ? $user['name'] : 'User');
+                
+                // Hier wird die Rolle (admin oder customer) aus der DB in die Session geladen
+                $_SESSION['user_role'] = $user['role']; 
 
                 header("Location: index.php");
                 exit;
@@ -47,45 +60,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Bitte alle Felder ausfüllen!";
     }
 }
+
+include 'includes/header.php'; 
 ?>
 
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>Login OnlineShop</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-    <?php include 'includes/header.php'; ?>
-
-    <div class="login-container">
+<main class="container">
+    <div class="login-container" style="max-width: 400px; margin: 40px auto; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
         <h2>Einloggen</h2>
 
-        <!-- Wenn es einen Fehler gibt, hier angezeigt-->
         <?php if (!empty($error)): ?>
-            <p style="color: red;"><?php echo $error; ?></p>
+            <p style="color: red; font-weight: bold;"><?php echo $error; ?></p>
         <?php endif; ?>
 
-        <form action="login.php" method="POST">
+        <form action="login.php" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
             <div class="form-group">
-                <label>E-Mail-Adresse:</label>
-                <input type="email" name="email" required>
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">E-Mail-Adresse:</label>
+                <input type="email" name="email" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
             </div>
 
             <div class="form-group">
-                <label>Passwort:</label>
-                <input type="password" name="password" required>
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Passwort:</label>
+                <input type="password" name="password" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
             </div>
 
-            <button type="submit">Login</button>
+            <button type="submit" class="btn" style="width: 100%; border: none; cursor: pointer;">
+                Login
+            </button>
         </form>
 
-        <p>Noch kein Konto? <a href="register.php">Hier registrieren</a></p>
+        <p style="margin-top: 15px; text-align: center; font-size: 0.9rem;">
+            Noch kein Konto? <a href="register.php" style="color: #FF69B4;">Hier registrieren</a>
+        </p>
     </div>
+</main>
 
-    <?php include 'includes/footer.php'; ?>
-
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>
